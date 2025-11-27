@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
 }
@@ -7,7 +8,8 @@ body {
     /* 2. CHANGE THIS: Set 'Comic Neue' as the main font */
     font-family: 'Comic Neue', sans-serif;
     text-align: center;
-    background-color: #f4f4f4;
+    background: linear-gradient(135deg, #f0f8ff 0%, #e6f7ff 100%);
+    /* Subtle gradient */
     /* Add a smooth transition for the background color */
     transition: background-color 0.3s;
 }
@@ -15,7 +17,9 @@ body {
 h1 {
     font-size: 2.2em;
     margin: 15px 0;
-    font-weight: 700; /* Use the bold weight of Comic Neue */
+    font-weight: 700;
+    /* Use the bold weight of Comic Neue */
+    text-shadow: 2px 2px 0px #fff;
 }
 
 /* --- Color Palette Styles --- */
@@ -31,7 +35,7 @@ h1 {
     height: 40px;
     border-radius: 50%;
     border: 2px solid #ffffff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: transform 0.2s;
 }
@@ -42,11 +46,13 @@ h1 {
 
 /* --- NEW: Alphabet Prompt Style --- */
 #alphabet-prompt {
-    display: none; /* Hidden by default */
+    display: none;
+    /* Hidden by default */
     font-size: 2em;
     font-weight: 700;
     color: #333;
     margin: 10px 0;
+    text-shadow: 1px 1px 0 #fff;
 }
 
 
@@ -55,38 +61,48 @@ h1 {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 10px;
-    padding: 10px;
+    padding: 20px;
     max-width: 95%;
     margin: 10px auto;
     touch-action: none;
     box-sizing: border-box;
+    /* Card Style */
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 30px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
 .letter-box {
     background-color: #ffffff;
-    border: 3px solid #cccccc;
+    border: none;
+    /* Removed border for cleaner look */
+    box-shadow: 0 4px 0 #ddd;
+    /* 3D effect */
 
     /* 3. CHANGE THIS: This creates the "squircle" shape */
-    border-radius: 25px;
+    border-radius: 20px;
 
     padding: 15px 0;
     font-size: 2.5em;
-    font-weight: 700; /* Use the bold weight */
+    font-weight: 700;
+    /* Use the bold weight */
     color: #333;
     cursor: pointer;
     user-select: none;
 
     /* This transition animates the FINAL state (the color and JS-applied scale) */
-    transition: background-color 0.2s, transform 0.2s ease-out;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 /* 4. ADD THIS: The new "push-in" effect for immediate feedback */
 .letter-box:active {
     /* Make it pop bigger, instantly */
-    transform: scale(1.1);
+    transform: scale(0.95) translateY(4px);
+    box-shadow: 0 0 0 #ddd;
+    /* Flatten shadow */
 
     /* Add a white "glow" effect */
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
+    /* box-shadow: 0 0 15px rgba(255, 255, 255, 0.9); */
 
     /* This transition makes the "push-in" fast */
     transition: transform 0.05s ease-in;
@@ -109,29 +125,39 @@ h1 {
     padding: 12px 25px;
     font-size: 1.1em;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 25px;
     border: none;
     color: white;
-    font-family: 'Comic Neue', sans-serif; /* Make buttons use the font too */
+    font-family: 'Comic Neue', sans-serif;
+    /* Make buttons use the font too */
     font-weight: 700;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+    transition: all 0.2s;
+}
+
+.control-button:active {
+    transform: translateY(4px);
+    box-shadow: none;
 }
 
 /* MODIFIED: Renamed button */
 #level-1-button {
-    background-color: #007BFF;
+    background: linear-gradient(to bottom, #007BFF, #0056b3);
 }
 
 #speech-toggle-button {
-    background-color: #5cb85c;
+    background: linear-gradient(to bottom, #5cb85c, #4cae4c);
 }
 
 #case-toggle-button {
-    background-color: #f0ad4e; /* A friendly orange */
+    background: linear-gradient(to bottom, #f0ad4e, #ec971f);
+    /* A friendly orange */
 }
 
 /* NEW: Style for Level 2 button */
 #level-2-button {
-    background-color: #dc3545; /* Red */
+    background: linear-gradient(to bottom, #dc3545, #c9302c);
+    /* Red */
 }
 
 
@@ -147,6 +173,7 @@ h1 {
 .level-2-active #speech-toggle-button {
     display: none;
 }
+
 /* --- END OF MODIFICATION --- */
 
 
@@ -160,7 +187,8 @@ h1 {
 
 /* Style for a wrong guess */
 .level-2-active .letter-box.wrong {
-    background-color: #f44336; /* Red */
+    background-color: #f44336;
+    /* Red */
     color: white;
     border-color: #f44336;
     animation: shake 0.5s;
@@ -173,6 +201,7 @@ h1 {
     box-shadow: none;
     cursor: default;
 }
+
 .level-2-active .letter-box.found:active {
     transform: scale(1.0);
     box-shadow: none;
@@ -181,11 +210,25 @@ h1 {
 
 /* NEW: Shake animation (from Spelling game) */
 @keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-10px); }
-  50% { transform: translateX(10px); }
-  75% { transform: translateX(-10px); }
-  100% { transform: translateX(0); }
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    50% {
+        transform: translateX(10px);
+    }
+
+    75% {
+        transform: translateX(-10px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
 }
 
 
@@ -247,6 +290,7 @@ h1 {
         top: 10px;
         left: 10px;
     }
+
     /* --- END MODIFICATION --- */
 }
 
@@ -256,7 +300,8 @@ h1 {
     position: absolute;
     top: 20px;
     left: 20px;
-    font-size: 1.8em; /* Nice and large icon */
+    font-size: 1.8em;
+    /* Nice and large icon */
     color: #333;
     text-decoration: none;
     padding: 10px;
@@ -267,6 +312,7 @@ h1 {
 .home-btn-subpage:active {
     transform: scale(0.9);
 }
+
 /* --- END MODIFICATION --- */
 
 
@@ -280,8 +326,10 @@ h1 {
 @media (orientation: landscape) and (min-height: 501px) {
 
     h1 {
-        font-size: 2em; /* Slightly smaller title */
-        margin: 10px 0; /* Reduced margin */
+        font-size: 2em;
+        /* Slightly smaller title */
+        margin: 10px 0;
+        /* Reduced margin */
     }
 
     #color-palette {
@@ -289,26 +337,32 @@ h1 {
     }
 
     #alphabet-container {
-        grid-template-columns: repeat(9, 1fr); /* Use 9 columns */
-        gap: 8px; /* Can keep gap a bit larger than phone */
+        grid-template-columns: repeat(9, 1fr);
+        /* Use 9 columns */
+        gap: 8px;
+        /* Can keep gap a bit larger than phone */
         padding: 8px;
         margin: 10px auto;
     }
 
     .letter-box {
-        font-size: 2em; /* Slightly smaller text */
+        font-size: 2em;
+        /* Slightly smaller text */
         padding: 12px 0;
         border-radius: 20px;
     }
 
     #controls-container {
-        margin-top: 10px; /* Reduced margin */
+        margin-top: 10px;
+        /* Reduced margin */
     }
 }
+
 /* --- NEW: Starburst Effect Styles --- */
 
 .star-particle {
-    position: fixed; /* Use fixed positioning to burst from the click point */
+    position: fixed;
+    /* Use fixed positioning to burst from the click point */
     width: 8px;
     height: 8px;
     border-radius: 50%;
@@ -330,6 +384,7 @@ h1 {
         transform: translate(-50%, -50%) scale(0.5);
         opacity: 1;
     }
+
     100% {
         /* Use the custom properties set in JS */
         transform: translate(calc(var(--dest-x) - 50%), calc(var(--dest-y) - 50%)) scale(1.2);

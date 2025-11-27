@@ -1,12 +1,14 @@
 /* Base styles adapted from your alphabet-fun/style.css */
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
     font-family: 'Comic Neue', sans-serif;
     text-align: center;
-    background-color: #f0f8ff; /* Light blue background */
+    background: linear-gradient(135deg, #f0f8ff 0%, #e6f7ff 100%);
+    /* Subtle gradient */
     overflow: hidden;
     /* Prevents double-tap zoom on tablets */
     touch-action: manipulation;
@@ -16,6 +18,7 @@ h1 {
     font-size: 3em;
     margin: 20px 0;
     font-weight: 700;
+    text-shadow: 2px 2px 0px #fff;
 }
 
 h2 {
@@ -23,17 +26,20 @@ h2 {
     margin: 15px 0;
     font-weight: 700;
     color: #333;
+    text-shadow: 2px 2px 0px #fff;
 }
 
 /* --- Navigation & Screen Styling --- */
 .game-screen {
-    display: none; /* Hidden by default */
+    display: none;
+    /* Hidden by default */
     width: 100%;
     height: 100%;
     flex-direction: column;
     align-items: center;
     /* justify-content: center; */
-    padding-top: 20px; /* Add some padding */
+    padding-top: 20px;
+    /* Add some padding */
     position: absolute;
     top: 0;
     left: 0;
@@ -42,7 +48,8 @@ h2 {
 }
 
 .game-screen.visible {
-    display: flex; /* Show the active screen */
+    display: flex;
+    /* Show the active screen */
 }
 
 .back-btn {
@@ -53,10 +60,17 @@ h2 {
     font-weight: 700;
     padding: 10px 20px;
     background-color: #f4f4f4;
-    border: 2px solid #ccc;
+    border: none;
     border-radius: 12px;
     cursor: pointer;
     z-index: 100;
+    box-shadow: 0 4px 0 #ccc;
+    transition: all 0.1s;
+}
+
+.back-btn:active {
+    transform: translateY(4px);
+    box-shadow: none;
 }
 
 /* Styles for the "touchable" area of each game */
@@ -84,20 +98,30 @@ h2 {
     font-weight: 700;
     padding: 20px 40px;
     min-width: 300px;
-    border-radius: 20px;
-    border: 3px solid #666;
+    border-radius: 25px;
+    border: none;
     color: white;
     cursor: pointer;
-    transition: transform 0.1s;
+    transition: all 0.2s;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
 }
 
 .menu-btn:active {
-    transform: scale(0.95);
+    transform: translateY(6px);
+    box-shadow: none;
 }
 
-#start-counting-btn { background-color: #4CAF50; /* Green */ }
-#start-tracing-btn  { background-color: #F44336; /* Red */ }
-#start-patterns-btn { background-color: #3F51B5; /* Indigo */ }
+#start-counting-btn {
+    background: linear-gradient(to bottom, #4CAF50, #388E3C);
+}
+
+#start-tracing-btn {
+    background: linear-gradient(to bottom, #F44336, #D32F2F);
+}
+
+#start-patterns-btn {
+    background: linear-gradient(to bottom, #3F51B5, #303F9F);
+}
 
 /* --- 1. Counting Game Styles --- */
 #counting-grid {
@@ -105,10 +129,16 @@ h2 {
     flex-wrap: wrap;
     align-content: center;
     gap: 15px;
+    /* Card Style */
+    background: rgba(255, 255, 255, 0.6);
+    padding: 20px;
+    border-radius: 30px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
 .counting-item {
-    font-size: 4.5em; /* Big, tappable emoji */
+    font-size: 4.5em;
+    /* Big, tappable emoji */
     cursor: pointer;
     transition: transform 0.2s, opacity 0.2s;
     user-select: none;
@@ -134,14 +164,24 @@ h2 {
     flex-wrap: wrap;
 }
 
-#trace-clear-btn, #trace-next-btn {
+#trace-clear-btn,
+#trace-next-btn {
     font-size: 1.2em;
     font-weight: 700;
     padding: 10px 20px;
-    background-color: #FFF9C4; /* Yellow */
-    border: 2px solid #ccc;
+    background-color: #FFF9C4;
+    /* Yellow */
+    border: none;
     border-radius: 12px;
     cursor: pointer;
+    box-shadow: 0 4px 0 #ccc;
+    transition: all 0.1s;
+}
+
+#trace-clear-btn:active,
+#trace-next-btn:active {
+    transform: translateY(4px);
+    box-shadow: none;
 }
 
 #tracing-container {
@@ -150,9 +190,9 @@ h2 {
     max-width: 800px;
     max-height: 600px;
     background-color: #ffffff;
-    border: 3px solid #999;
-    border-radius: 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     overflow: hidden;
 
     /* --- THIS IS THE CRITICAL FIX for Portrait Mode --- */
@@ -181,7 +221,7 @@ h2 {
     height: 1.2em;
     border: 5px dashed #999;
     border-radius: 15px;
-    background: rgba(255,255,255,0.4);
+    background: rgba(255, 255, 255, 0.4);
 }
 
 #pattern-choices {
@@ -191,7 +231,10 @@ h2 {
 }
 
 /* Add a new button color */
-#start-egg-dition-btn { background-color: #FFC107; /* A sunny yellow */ }
+#start-egg-dition-btn {
+    background-color: #FFC107;
+    /* A sunny yellow */
+}
 
 /* New styles for the Egg-dition game */
 #egg-problem-container {
@@ -218,10 +261,11 @@ h2 {
     height: 55px;
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     border: 2px solid #555;
-    box-shadow: inset 3px -3px 5px rgba(0,0,0,0.1);
+    box-shadow: inset 3px -3px 5px rgba(0, 0, 0, 0.1);
 }
 
-.math-symbol, .blank-answer {
+.math-symbol,
+.blank-answer {
     font-size: 4em;
     font-weight: 700;
     color: #333;
@@ -233,13 +277,15 @@ h2 {
     align-items: center;
     gap: 10px;
     padding: 10px;
-    background: #F1F8E9; /* Light green nest */
+    background: #F1F8E9;
+    /* Light green nest */
     border: 3px solid #8BC34A;
     border-radius: 15px;
     min-height: 100px;
     width: 80%;
     max-width: 500px;
-    flex-wrap: wrap; /* Allows eggs to wrap */
+    flex-wrap: wrap;
+    /* Allows eggs to wrap */
 }
 
 /* Re-use choice button style from Patterns game */
@@ -259,27 +305,42 @@ h2 {
     border: 3px solid #666;
     color: white;
     cursor: pointer;
-    background-color: #FF9800; /* Orange */
+    background-color: #FF9800;
+    /* Orange */
     transition: all 0.2s;
 }
+
 .choice-btn:active {
     transform: scale(0.95);
 }
 
 .choice-btn.correct {
-    background-color: #4CAF50; /* Green */
-    
+    background-color: #4CAF50;
+    /* Green */
+
 }
+
 .choice-btn.incorrect {
-    background-color: #F44336; /* Red */
+    background-color: #F44336;
+    /* Red */
     animation: shake 0.3s;
 }
 
 /* Simple shake animation for wrong answers */
 @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-10px); }
-    75% { transform: translateX(10px); }
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    75% {
+        transform: translateX(10px);
+    }
 }
 
 /* --- Style for new Home Button --- */
@@ -287,7 +348,8 @@ h2 {
     position: absolute;
     top: 20px;
     left: 20px;
-    font-size: 1.8em; /* Nice and large icon */
+    font-size: 1.8em;
+    /* Nice and large icon */
     color: #333;
     text-decoration: none;
     padding: 10px;
@@ -306,22 +368,27 @@ h2 {
 
     /* Puts the back button above the title, fixing the overlap */
     .back-btn {
-        position: static; /* Un-stick it from the corner */
-        margin-top: 15px; /* Add some space above */
+        position: static;
+        /* Un-stick it from the corner */
+        margin-top: 15px;
+        /* Add some space above */
     }
 
     h2 {
-        font-size: 1.8em; /* Shrink the title */
+        font-size: 1.8em;
+        /* Shrink the title */
         margin: 10px 0;
     }
 
     /* --- Patterns Game Specifics --- */
     #patterns-game #patterns-prompt {
-        margin-top: 0; /* Tighten up space left by back button */
+        margin-top: 0;
+        /* Tighten up space left by back button */
     }
 
     #pattern-sequence {
-        font-size: 3.5em; /* Shrink the sequence numbers */
+        font-size: 3.5em;
+        /* Shrink the sequence numbers */
         gap: 15px;
     }
 
@@ -330,13 +397,16 @@ h2 {
     }
 
     #pattern-choices {
-        gap: 10px; /* Tighter gap between buttons */
+        gap: 10px;
+        /* Tighter gap between buttons */
         margin-top: 20px;
     }
 
     .choice-btn {
-        font-size: 2.5em; /* Significantly shrink the choice buttons */
-        width: 2.2em;   /* Adjust button box size */
+        font-size: 2.5em;
+        /* Significantly shrink the choice buttons */
+        width: 2.2em;
+        /* Adjust button box size */
         height: 2.2em;
         border-width: 2px;
         border-radius: 15px;
@@ -344,35 +414,45 @@ h2 {
 
     /* --- Egg-dition Game Specifics --- */
     #egg-problem-container {
-        flex-wrap: wrap; /* This is the main fix! Allows wrapping */
-        gap: 10px;       /* Tighter gap between items */
+        flex-wrap: wrap;
+        /* This is the main fix! Allows wrapping */
+        gap: 10px;
+        /* Tighter gap between items */
         margin: 10px 0;
     }
 
     .egg-group {
-        min-height: 60px; /* Make the boxes smaller */
+        min-height: 60px;
+        /* Make the boxes smaller */
         padding: 8px;
-        gap: 5px;         /* Tighter gap between eggs */
+        gap: 5px;
+        /* Tighter gap between eggs */
     }
 
     .egg {
-        width: 30px;      /* Make the eggs smaller */
+        width: 30px;
+        /* Make the eggs smaller */
         height: 42px;
     }
 
-    .math-symbol, .blank-answer {
-        font-size: 3em;   /* Make the symbols smaller */
+    .math-symbol,
+    .blank-answer {
+        font-size: 3em;
+        /* Make the symbols smaller */
     }
 
     #egg-solution-container {
-        min-height: 80px; /* Adjust the "nest" size */
+        min-height: 80px;
+        /* Adjust the "nest" size */
         width: 90%;
     }
 
     #egg-choices {
-        padding-bottom: 20px; /* Add space at the very bottom */
+        padding-bottom: 20px;
+        /* Add space at the very bottom */
     }
 }
+
 /* --- END: PHONE PORTRAIT FIXES --- */
 /* --- START: PHONE LANDSCAPE FIXES (All Games) --- */
 
@@ -380,16 +460,22 @@ h2 {
 @media (orientation: landscape) and (max-height: 500px) {
 
     h1 {
-        font-size: 2em; /* Shrink main menu title */
+        font-size: 2em;
+        /* Shrink main menu title */
         margin: 10px 0;
     }
+
     h2 {
-        font-size: 1.5em; /* Shrink game titles */
+        font-size: 1.5em;
+        /* Shrink game titles */
         margin: 5px 0;
     }
 
-    .back-btn, #trace-clear-btn, #trace-next-btn {
-        padding: 5px 10px; /* Smaller buttons */
+    .back-btn,
+    #trace-clear-btn,
+    #trace-next-btn {
+        padding: 5px 10px;
+        /* Smaller buttons */
         font-size: 1em;
         top: 10px;
         left: 10px;
@@ -405,8 +491,10 @@ h2 {
     #counting-grid {
         gap: 10px;
     }
+
     .counting-item {
-        font-size: 3em; /* Shrink emojis */
+        font-size: 3em;
+        /* Shrink emojis */
     }
 
     /* --- Tracing Game --- */
@@ -414,26 +502,34 @@ h2 {
         padding: 5px;
         gap: 10px;
     }
+
     #tracing-container {
-        height: 70vh; /* Make trace area slightly smaller */
+        height: 70vh;
+        /* Make trace area slightly smaller */
     }
 
     /* --- Patterns Game --- */
     #pattern-sequence {
-        font-size: 3em; /* Shrink sequence */
+        font-size: 3em;
+        /* Shrink sequence */
         gap: 15px;
     }
+
     #pattern-choices {
-        gap: 15px; /* Tighter gap */
+        gap: 15px;
+        /* Tighter gap */
         margin-top: 15px;
     }
+
     .choice-btn {
-        font-size: 2em; /* Shrink choice buttons */
+        font-size: 2em;
+        /* Shrink choice buttons */
         width: 2.2em;
         height: 2.2em;
         border-radius: 10px;
     }
 }
+
 /* --- END: PHONE LANDSCAPE FIXES --- */
 /* --- NEW: Level Toggle Button (Consistent with Spelling App) --- */
 .level-toggle-container {
@@ -450,7 +546,8 @@ h2 {
     border-radius: 30px;
     border: 3px solid #333;
     cursor: pointer;
-    background-color: #007BFF; /* Blue for Level 1 */
+    background-color: #007BFF;
+    /* Blue for Level 1 */
     color: white;
     transition: all 0.2s;
     box-shadow: 0 4px 0 #0056b3;
@@ -462,6 +559,7 @@ h2 {
 }
 
 #level-toggle-btn.level-2 {
-    background-color: #dc3545; /* Red for Level 2 */
+    background-color: #dc3545;
+    /* Red for Level 2 */
     box-shadow: 0 4px 0 #a71d2a;
 }

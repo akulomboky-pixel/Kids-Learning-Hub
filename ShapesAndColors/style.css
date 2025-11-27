@@ -1,12 +1,14 @@
 /* Base styles adapted from your alphabet-fun/style.css */
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
     font-family: 'Comic Neue', sans-serif;
     text-align: center;
-    background-color: #f0f8ff; /* Light blue background */
+    background: linear-gradient(135deg, #f0f8ff 0%, #e6f7ff 100%);
+    /* Subtle gradient */
     overflow: hidden;
     /* Prevents double-tap zoom on tablets */
     touch-action: manipulation;
@@ -16,6 +18,7 @@ h1 {
     font-size: 3em;
     margin: 20px 0;
     font-weight: 700;
+    text-shadow: 2px 2px 0px #fff;
 }
 
 h2 {
@@ -23,17 +26,20 @@ h2 {
     margin: 15px 0;
     font-weight: 700;
     color: #333;
+    text-shadow: 2px 2px 0px #fff;
 }
 
 /* --- Navigation & Screen Styling --- */
 .game-screen {
-    display: none; /* Hidden by default */
+    display: none;
+    /* Hidden by default */
     width: 100%;
     height: 100%;
     flex-direction: column;
     align-items: center;
     /* justify-content: center; */
-    padding-top: 20px; /* Add some padding */
+    padding-top: 20px;
+    /* Add some padding */
     position: absolute;
     top: 0;
     left: 0;
@@ -42,7 +48,8 @@ h2 {
 }
 
 .game-screen.visible {
-    display: flex; /* Show the active screen */
+    display: flex;
+    /* Show the active screen */
 }
 
 .back-btn {
@@ -53,10 +60,17 @@ h2 {
     font-weight: 700;
     padding: 10px 20px;
     background-color: #f4f4f4;
-    border: 2px solid #ccc;
+    border: none;
     border-radius: 12px;
     cursor: pointer;
     z-index: 100;
+    box-shadow: 0 4px 0 #ccc;
+    transition: all 0.1s;
+}
+
+.back-btn:active {
+    transform: translateY(4px);
+    box-shadow: none;
 }
 
 /* Styles for the "touchable" area of each game */
@@ -64,7 +78,8 @@ h2 {
     width: 95%;
     flex-grow: 1;
     display: flex;
-    flex-direction: column; /* Changed for spider web game layout */
+    flex-direction: column;
+    /* Changed for spider web game layout */
     justify-content: center;
     align-items: center;
     padding: 10px;
@@ -85,77 +100,34 @@ h2 {
     font-weight: 700;
     padding: 20px 40px;
     min-width: 300px;
-    border-radius: 20px;
-    border: 3px solid #666;
+    border-radius: 25px;
+    border: none;
     color: white;
     cursor: pointer;
-    transition: transform 0.1s;
+    transition: all 0.2s;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
 }
 
 .menu-btn:active {
-    transform: scale(0.95);
+    transform: translateY(6px);
+    box-shadow: none;
 }
 
 /* --- NEW Menu Button Colors --- */
-#start-leaf-sort-btn { background-color: #4CAF50; /* Green */ }
-#start-shape-web-btn { background-color: #9C27B0; /* Purple */ }
-#start-shape-puzzle-btn { background-color: #F44336; /* Red */ }
-
-/* --- Re-used style for Shape Game (from Spelling/style.css) --- */
-.letter-button {
-  width: 90px;
-  height: 90px;
-  font-size: 60px;
-  font-weight: bold;
-  cursor: pointer;
-  border: 3px solid #555;
-  border-radius: 10px;
-  background-color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 5px; /* Added padding */
-  box-sizing: border-box; /* Added for better layout */
+#start-leaf-sort-btn {
+    background: linear-gradient(to bottom, #4CAF50, #388E3C);
 }
 
-.letter-button:active {
-  transform: scale(0.95);
+#start-shape-web-btn {
+    background: linear-gradient(to bottom, #9C27B0, #7B1FA2);
 }
 
-/* --- Re-used Animations (from Spelling/style.css) --- */
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-10px); }
-    75% { transform: translateX(10px); }
+#start-shape-puzzle-btn {
+    background: linear-gradient(to bottom, #F44336, #D32F2F);
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-.hidden {
-  display: none;
-}
-
-#next-shape-button,
-#next-puzzle-button{
-  font-size: 28px;
-  font-weight: bold;
-  padding: 20px 30px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-top: 20px;
-  transition: background-color 0.2s;
-}
-
-#next-shape-button:hover,
-#next-puzzle-button:hover{
-  background-color: #45a049; /* A slightly darker green */
+#start-mixing-btn {
+    background: linear-gradient(to bottom, #E91E63, #C2185B);
 }
 
 /* --- Style for Home Button --- */
@@ -163,7 +135,8 @@ h2 {
     position: absolute;
     top: 20px;
     left: 20px;
-    font-size: 1.8em; /* Nice and large icon */
+    font-size: 1.8em;
+    /* Nice and large icon */
     color: #333;
     text-decoration: none;
     padding: 10px;
@@ -181,34 +154,45 @@ h2 {
     width: 90%;
     min-height: 300px;
     height: 45vh;
-    background: #e0f2f1; /* Light teal background */
+    background: #e0f2f1;
+    /* Light teal background */
     border-radius: 20px;
     border: 3px dashed #80cbc4;
+    /* Card Style */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
+
 #basket-container {
     display: flex;
     justify-content: space-around;
-    flex-wrap: wrap; /* Allow baskets to wrap on small screens */
+    flex-wrap: wrap;
+    /* Allow baskets to wrap on small screens */
     width: 100%;
     padding: 20px;
     gap: 15px;
 }
+
 .leaf {
     width: 100px;
     height: 100px;
-    background-size: contain; /* Use contain */
+    background-size: contain;
+    /* Use contain */
     background-repeat: no-repeat;
     background-position: center;
-    cursor: pointer; /* Changed from grab */
-    position: absolute; /* for random placement in pile */
+    cursor: pointer;
+    /* Changed from grab */
+    position: absolute;
+    /* for random placement in pile */
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
 /* Style for the leaf when it's selected */
 .leaf.selected {
     transform: scale(1.1);
-    box-shadow: 0 0 15px 5px #007bff; /* Blue glow */
-    z-index: 100; /* Bring to front */
+    box-shadow: 0 0 15px 5px #007bff;
+    /* Blue glow */
+    z-index: 100;
+    /* Bring to front */
 }
 
 .basket {
@@ -223,31 +207,61 @@ h2 {
     align-content: flex-start;
     justify-content: center;
     padding: 5px;
-    box-sizing: border-box; /* Important */
+    box-sizing: border-box;
+    /* Important */
+    background: rgba(255, 255, 255, 0.5);
+    /* Semi-transparent bg */
 }
 
 /* Style for a leaf AFTER it's inside a basket */
 .basket .leaf {
-    width: 30px;  /* Make it small */
+    width: 30px;
+    /* Make it small */
     height: 30px;
-    position: static; /* Let it flow normally */
-    background-size: contain; /* Ensure image scales down */
+    position: static;
+    /* Let it flow normally */
+    background-size: contain;
+    /* Ensure image scales down */
     margin: 2px;
-    cursor: default; /* Make it un-clickable */
-    box-shadow: none; /* Remove any glow */
+    cursor: default;
+    /* Make it un-clickable */
+    box-shadow: none;
+    /* Remove any glow */
 }
 
 /* Color variants (using background-image) */
-.leaf.green { background-image: url('images/leaf-green.png'); }
-.leaf.red { background-image: url('images/leaf-red.png'); }
-.leaf.yellow { background-image: url('images/leaf-yellow.png'); }
-.leaf.brown { background-image: url('images/leaf-brown.png'); }
+.leaf.green {
+    background-image: url('images/leaf-green.png');
+}
+
+.leaf.red {
+    background-image: url('images/leaf-red.png');
+}
+
+.leaf.yellow {
+    background-image: url('images/leaf-yellow.png');
+}
+
+.leaf.brown {
+    background-image: url('images/leaf-brown.png');
+}
 
 /* --- FIX: Use the full 'border' property to override the default --- */
-.basket.green { border: 5px solid #4CAF50; }
-.basket.red { border: 5px solid #F44336; }
-.basket.yellow { border: 5px solid #FFEB3B; }
-.basket.brown { border: 5px solid #795548; }
+.basket.green {
+    border: 5px solid #4CAF50;
+}
+
+.basket.red {
+    border: 5px solid #F44336;
+}
+
+.basket.yellow {
+    border: 5px solid #FFEB3B;
+}
+
+.basket.brown {
+    border: 5px solid #795548;
+}
 
 
 /* --- Shape Web Game --- */
@@ -259,20 +273,32 @@ h2 {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    flex-shrink: 0; /* Prevent it from shrinking */
-	position: relative;
+    flex-shrink: 0;
+    /* Prevent it from shrinking */
+    position: relative;
+    /* Card Style */
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    /* Circular card for web */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
+
 #friendly-spider {
-    position: absolute;  /* Now relative to #spider-web-display */
-    
+    position: absolute;
+    /* Now relative to #spider-web-display */
+
     /* === Adjust these percentages as you like === */
-    width: 30%;         /* e.g., 30% of the web's width */
-    top: 10%;           /* 10% from the top of the web */
-    left: 10%;          /* 10% from the left of the web */
+    width: 30%;
+    /* e.g., 30% of the web's width */
+    top: 10%;
+    /* 10% from the top of the web */
+    left: 10%;
+    /* 10% from the left of the web */
     /* ============================================ */
-    
-    z-index: 10; 
+
+    z-index: 10;
 }
+
 #shape-choices-container {
     display: flex;
     justify-content: center;
@@ -280,98 +306,40 @@ h2 {
     gap: 20px;
     margin-top: 20px;
 }
+
 .shape-choice-btn {
     /* Uses .letter-button class */
+    width: 90px;
+    height: 90px;
+    font-size: 60px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 3px solid #555;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 0 #ccc;
+    /* Add shadow to match others */
+    transition: all 0.1s;
 }
+
+.shape-choice-btn:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
 .shape-choice-btn img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    pointer-events: none; /* Prevents img from capturing click */
+    pointer-events: none;
+    /* Prevents img from capturing click */
 }
 
-
-/* --- Responsive Fixes --- */
-
-@media (orientation: portrait) and (max-width: 500px) {
-    .back-btn {
-        position: static;
-        margin-top: 15px;
-    }
-    h1 {
-        font-size: 2.5em;
-    }
-    h2 {
-        font-size: 1.8em;
-        margin: 10px 0;
-    }
-    .menu-btn {
-        font-size: 2em;
-    }
-
-    .basket {
-        width: 100px;
-        height: 100px;
-    }
-    .letter-button, .shape-choice-btn {
-        width: 80px;
-        height: 80px;
-    }
-}
-
-@media (orientation: landscape) and (max-height: 500px) {
-    h1 {
-        font-size: 2em;
-        margin: 10px 0;
-    }
-    h2 {
-        font-size: 1.5em;
-        margin: 5px 0;
-    }
-    .back-btn {
-        padding: 5px 10px;
-        font-size: 1em;
-        top: 10px;
-        left: 10px;
-    }
-    .home-btn-subpage {
-        top: 10px;
-        left: 10px;
-    }
-    .touch-area {
-        flex-grow: 1;
-        min-height: 0; /* Allow shrinking */
-    }
-    #spider-web-display {
-        width: 200px;
-        height: 200px;
-    }
-    #leaf-pile-container {
-        height: 50vh;
-        min-height: 150px;
-    }
-    #basket-container {
-        padding: 10px;
-        gap: 10px;
-    }
-    .basket {
-        width: 80px;
-        height: 80px;
-    }
-    .basket .leaf {
-        width: 20px;
-        height: 20px;
-    }
-    .letter-button, .shape-choice-btn {
-        width: 70px;
-        height: 70px;
-    }
-    #shape-choices-container {
-        gap: 10px;
-        margin-top: 10px;
-    }
-
-}
 /* --- Shape Puzzle Game --- */
 #shape-puzzle-canvas,
 #leaf-sort-canvas {
@@ -379,45 +347,45 @@ h2 {
     flex-grow: 1;
 
     /* --- FIXES START --- */
-    display: block;         /* Override 'display: flex' from .touch-area */
-    min-height: 0;          /* Allow the container to shrink on small screens */
+    display: block;
+    /* Override 'display: flex' from .touch-area */
+    min-height: 0;
+    /* Allow the container to shrink on small screens */
     /* --- FIXES END --- */
 
     padding: 10px;
     box-sizing: border-box;
-    background: #f4f4f4;
-    border: 3px solid #ccc;
-    border-radius: 15px;
+    background: #ffffff;
+    /* Changed to white */
+    border: none;
+    border-radius: 25px;
     overflow: hidden;
     touch-action: none;
+    /* Card Style */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
-
-
-/* --- Responsive Fixes for Puzzle Game --- */
-@media (orientation: portrait) and (max-width: 500px) {
-    #shape-puzzle-canvas {
-        flex-grow: 1;
-
-    }
-
-    #next-puzzle-button {
-        margin-bottom: 20px;
-    }
-}
-/* --- Spider Bounce Animation --- */
-@keyframes spider-bounce {
-    0%, 100% { transform: scale(1); }
-    25% { transform: scale(1.3); }
-    50% { transform: scale(0.9); }
-    75% { transform: scale(1.2); }
+#next-shape-button,
+#next-puzzle-button {
+    font-size: 28px;
+    font-weight: bold;
+    padding: 20px 30px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.2s;
 }
 
-.spider-bounces {
-    animation: spider-bounce 0.8s ease-in-out;
+#next-shape-button:hover,
+#next-puzzle-button:hover {
+    background-color: #45a049;
+    /* A slightly darker green */
 }
-#start-mixing-btn { background-color: #E91E63; /* Pink */ }
 
+/* --- Mixing Game --- */
 #mixing-problem-container {
     display: flex;
     justify-content: center;
@@ -430,9 +398,10 @@ h2 {
 .paint-blob {
     width: 80px;
     height: 80px;
-    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; /* Organic blob shape */
-    border: 4px solid rgba(0,0,0,0.1);
-    box-shadow: inset 10px 10px 20px rgba(255,255,255,0.4), 5px 5px 10px rgba(0,0,0,0.1);
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    /* Organic blob shape */
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    box-shadow: inset 10px 10px 20px rgba(255, 255, 255, 0.4), 5px 5px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
     cursor: pointer;
 }
@@ -458,7 +427,7 @@ h2 {
     align-items: center;
     font-size: 3em;
     color: #999;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 #mixing-choices {
@@ -481,13 +450,178 @@ h2 {
     transform: scale(0.9);
 }
 
-/* Responsive Tweaks for Mixing Game */
-@media (max-width: 500px) {
-    .paint-blob, .question-mark-box {
+/* --- Animations --- */
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    75% {
+        transform: translateX(10px);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes spider-bounce {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    25% {
+        transform: scale(1.3);
+    }
+
+    50% {
+        transform: scale(0.9);
+    }
+
+    75% {
+        transform: scale(1.2);
+    }
+}
+
+.spider-bounces {
+    animation: spider-bounce 0.8s ease-in-out;
+}
+
+.hidden {
+    display: none;
+}
+
+/* --- Responsive Fixes --- */
+
+@media (orientation: portrait) and (max-width: 500px) {
+    .back-btn {
+        position: static;
+        margin-top: 15px;
+    }
+
+    h1 {
+        font-size: 2.5em;
+    }
+
+    h2 {
+        font-size: 1.8em;
+        margin: 10px 0;
+    }
+
+    .menu-btn {
+        font-size: 2em;
+    }
+
+    .basket {
+        width: 100px;
+        height: 100px;
+    }
+
+    .letter-button,
+    .shape-choice-btn {
+        width: 80px;
+        height: 80px;
+    }
+
+    #shape-puzzle-canvas {
+        flex-grow: 1;
+    }
+
+    #next-puzzle-button {
+        margin-bottom: 20px;
+    }
+
+    .paint-blob,
+    .question-mark-box {
         width: 60px;
         height: 60px;
     }
+
     .math-symbol {
         font-size: 2em;
+    }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+    h1 {
+        font-size: 2em;
+        margin: 10px 0;
+    }
+
+    h2 {
+        font-size: 1.5em;
+        margin: 5px 0;
+    }
+
+    .back-btn {
+        padding: 5px 10px;
+        font-size: 1em;
+        top: 10px;
+        left: 10px;
+    }
+
+    .home-btn-subpage {
+        top: 10px;
+        left: 10px;
+    }
+
+    .touch-area {
+        flex-grow: 1;
+        min-height: 0;
+        /* Allow shrinking */
+    }
+
+    #spider-web-display {
+        width: 200px;
+        height: 200px;
+    }
+
+    #leaf-pile-container {
+        height: 50vh;
+        min-height: 150px;
+    }
+
+    #basket-container {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .basket {
+        width: 80px;
+        height: 80px;
+    }
+
+    .basket .leaf {
+        width: 20px;
+        height: 20px;
+    }
+
+    .letter-button,
+    .shape-choice-btn {
+        width: 70px;
+        height: 70px;
+    }
+
+    #shape-choices-container {
+        gap: 10px;
+        margin-top: 10px;
     }
 }

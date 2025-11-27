@@ -1,4 +1,4 @@
-(function() {
+(function () {
 
     // --- MODIFIED: Replaced PHONETIC_SOUNDS with EXAMPLE_WORDS ---
     // This list uses simple, common words for each letter.
@@ -160,6 +160,9 @@
                 const newColor = event.target.dataset.color;
 
                 // Set the page's background color
+                // FIX: We must clear the 'background' property (which holds the gradient)
+                // so that the 'backgroundColor' property can be seen.
+                bodyElement.style.background = 'none';
                 bodyElement.style.backgroundColor = newColor;
             }
         });
@@ -439,7 +442,7 @@
             alphabetPrompt.textContent = "You found them all!";
             // This now calls the global window.speakText
             window.StickerManager.awardSticker('alpha_star');
-			window.playConfettiEffect();
+            window.playConfettiEffect();
             window.speakText("You found them all! Great job!", () => {
                 // After 2 seconds, restart Level 2
                 setTimeout(startLevel2, 2000);
