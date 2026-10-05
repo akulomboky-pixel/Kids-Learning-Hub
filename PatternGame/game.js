@@ -1,81 +1,171 @@
 /* ==========================================
    TEBAK POLA
    Petualangan Otak Anak
-   ========================================== */
+   Version 2
+========================================== */
 
 
-/* -----------------------------
-   DATA PERMAINAN
------------------------------ */
+/* ==========================================
+   LEVEL DATA
+========================================== */
 
-const questions = [
+const levels = [
 
     {
-        pattern: ["circle", "triangle", "circle", "triangle", "circle"],
-        answer: "triangle",
-        options: ["triangle", "square", "star"]
+        name: "Pola Bergantian",
+
+        instruction:
+            "Perhatikan pola yang bergantian.",
+
+        make: function (A, B) {
+
+            return [
+                [A, B, A, B, A],
+                B
+            ];
+
+        }
     },
 
-    {
-        pattern: ["square", "circle", "square", "circle", "square"],
-        answer: "circle",
-        options: ["star", "circle", "triangle"]
-    },
 
     {
-        pattern: ["star", "circle", "star", "circle", "star"],
-        answer: "circle",
-        options: ["circle", "square", "triangle"]
+        name: "Pola Berpasangan",
+
+        instruction:
+            "Perhatikan bentuk yang muncul berpasangan.",
+
+        make: function (A, B) {
+
+            return [
+                [A, A, B, B, A],
+                A
+            ];
+
+        }
     },
 
-    {
-        pattern: ["triangle", "triangle", "circle", "triangle", "triangle"],
-        answer: "circle",
-        options: ["square", "circle", "star"]
-    },
 
     {
-        pattern: ["circle", "square", "triangle", "circle", "square"],
-        answer: "triangle",
-        options: ["star", "triangle", "circle"]
+        name: "Pola Tiga Bentuk",
+
+        instruction:
+            "Perhatikan tiga bentuk yang berulang.",
+
+        make: function (A, B, C) {
+
+            return [
+                [A, B, C, A, B],
+                C
+            ];
+
+        }
     },
 
-    {
-        pattern: ["star", "square", "star", "square", "star"],
-        answer: "square",
-        options: ["triangle", "circle", "square"]
-    },
 
     {
-        pattern: ["circle", "circle", "triangle", "circle", "circle"],
-        answer: "triangle",
-        options: ["triangle", "square", "star"]
-    },
+        name: "Pola Campuran",
 
-    {
-        pattern: ["triangle", "square", "triangle", "square", "triangle"],
-        answer: "square",
-        options: ["circle", "square", "star"]
-    },
+        instruction:
+            "Perhatikan pola campuran dengan teliti.",
 
-    {
-        pattern: ["star", "circle", "square", "star", "circle"],
-        answer: "square",
-        options: ["triangle", "square", "circle"]
-    },
+        make: function (A, B, C) {
 
-    {
-        pattern: ["square", "triangle", "circle", "square", "triangle"],
-        answer: "circle",
-        options: ["circle", "star", "square"]
+            return [
+                [A, B, B, A, B],
+                B
+            ];
+
+        }
     }
 
 ];
 
 
-/* -----------------------------
-   STATE
------------------------------ */
+/* ==========================================
+   SHAPE DATA
+========================================== */
+
+const shapes = {
+
+    circle: {
+
+        label: "Lingkaran",
+
+        symbol: "●"
+
+    },
+
+
+    triangle: {
+
+        label: "Segitiga",
+
+        symbol: "▲"
+
+    },
+
+
+    square: {
+
+        label: "Kotak",
+
+        symbol: "■"
+
+    },
+
+
+    star: {
+
+        label: "Bintang",
+
+        symbol: "★"
+
+    },
+
+
+    diamond: {
+
+        label: "Belah ketupat",
+
+        symbol: "◆"
+
+    }
+
+};
+
+
+/* ==========================================
+   QUESTION PALETTES
+========================================== */
+
+const palettes = [
+
+    ["circle", "triangle", "square"],
+
+    ["square", "circle", "star"],
+
+    ["star", "circle", "triangle"],
+
+    ["triangle", "square", "star"],
+
+    ["circle", "diamond", "triangle"],
+
+    ["star", "square", "diamond"],
+
+    ["triangle", "circle", "diamond"],
+
+    ["square", "star", "circle"],
+
+    ["diamond", "triangle", "square"],
+
+    ["circle", "star", "diamond"]
+
+];
+
+
+/* ==========================================
+   GAME STATE
+========================================== */
 
 let currentQuestion = 0;
 
@@ -83,10 +173,12 @@ let score = 0;
 
 let answered = false;
 
+let questions = [];
 
-/* -----------------------------
-   ELEMENT
------------------------------ */
+
+/* ==========================================
+   ELEMENTS
+========================================== */
 
 const patternElement =
     document.getElementById("pattern");
@@ -124,50 +216,41 @@ const bestScoreText =
 const restartButton =
     document.getElementById("restartButton");
 
+const levelNumber =
+    document.getElementById("levelNumber");
 
-/* -----------------------------
-   SHAPE DATA
------------------------------ */
+const levelName =
+    document.getElementById("levelName");
 
-const shapes = {
+const hint =
+    document.getElementById("hint");
 
-    circle: {
-        icon: "🔴",
-        className: "circle"
-    },
+const resultTitle =
+    document.getElementById("resultTitle");
 
-    triangle: {
-        icon: "🔺",
-        className: "triangle"
-    },
-
-    square: {
-        icon: "🟦",
-        className: "square"
-    },
-
-    star: {
-        icon: "⭐",
-        className: "star"
-    }
-
-};
+const resultMessage =
+    document.getElementById("resultMessage");
 
 
-/* -----------------------------
+/* ==========================================
    TEXT TO SPEECH
------------------------------ */
+========================================== */
 
 function speak(text) {
 
     if (!("speechSynthesis" in window)) {
+
         return;
+
     }
+
 
     window.speechSynthesis.cancel();
 
+
     const speech =
         new SpeechSynthesisUtterance(text);
+
 
     speech.lang = "id-ID";
 
@@ -175,200 +258,625 @@ function speak(text) {
 
     speech.pitch = 1.1;
 
-    window.speechSynthesis.speak(speech);
+
+    window.speechSynthesis.speak(
+        speech
+    );
+
 }
 
 
-/* -----------------------------
+/* ==========================================
+   CREATE QUESTIONS
+========================================== */
+
+function makeQuestions() {
+
+    return palettes.map(
+        function (palette, index) {
+
+            let data;
+
+            let level;
+
+
+            /*
+             * Soal 1-3
+             * Level 1
+             */
+
+            if (index < 3) {
+
+                level = 1;
+
+                data =
+                    levels[0].make(
+                        palette[0],
+                        palette[1]
+                    );
+
+            }
+
+
+            /*
+             * Soal 4-6
+             * Level 2
+             */
+
+            else if (index < 6) {
+
+                level = 2;
+
+                data =
+                    levels[1].make(
+                        palette[0],
+                        palette[1]
+                    );
+
+            }
+
+
+            /*
+             * Soal 7-9
+             * Level 3
+             */
+
+            else if (index < 9) {
+
+                level = 3;
+
+                data =
+                    levels[2].make(
+                        palette[0],
+                        palette[1],
+                        palette[2]
+                    );
+
+            }
+
+
+            /*
+             * Soal 10
+             * Level 4
+             */
+
+            else {
+
+                level = 4;
+
+                data =
+                    levels[3].make(
+                        palette[0],
+                        palette[1],
+                        palette[2]
+                    );
+
+            }
+
+
+            const answer =
+                data[1];
+
+
+            /*
+             * Buat pilihan jawaban.
+             */
+
+            const options = [
+
+                answer,
+
+                ...palette.filter(
+                    function (item) {
+
+                        return item !== answer;
+
+                    }
+                ).slice(0, 2)
+
+            ];
+
+
+            /*
+             * Acak pilihan jawaban.
+             */
+
+            options.sort(
+                function () {
+
+                    return Math.random() - 0.5;
+
+                }
+            );
+
+
+            return {
+
+                pattern: data[0],
+
+                answer: answer,
+
+                options: options,
+
+                level: level
+
+            };
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   CREATE SHAPE ELEMENT
+========================================== */
+
+function shapeNode(
+    name,
+    answerShape = false
+) {
+
+    const element =
+        document.createElement(
+            answerShape
+                ? "span"
+                : "div"
+        );
+
+
+    element.className =
+        answerShape
+            ? "answer-shape"
+            : "shape";
+
+
+    /*
+     * Lingkaran
+     */
+
+    if (name === "circle") {
+
+        element.classList.add(
+            "circle"
+        );
+
+    }
+
+
+    /*
+     * Kotak
+     */
+
+    if (name === "square") {
+
+        element.classList.add(
+            "square"
+        );
+
+    }
+
+
+    /*
+     * Segitiga
+     */
+
+    if (name === "triangle") {
+
+        element.classList.add(
+            "triangle"
+        );
+
+    }
+
+
+    /*
+     * Belah ketupat
+     */
+
+    if (name === "diamond") {
+
+        element.classList.add(
+            "diamond"
+        );
+
+    }
+
+
+    /*
+     * Bintang
+     */
+
+    if (name === "star") {
+
+        element.classList.add(
+            "star"
+        );
+
+        element.textContent = "★";
+
+    }
+
+
+    /*
+     * Simbol untuk tombol jawaban.
+     */
+
+    if (
+        answerShape &&
+        name !== "star"
+    ) {
+
+        element.textContent =
+            shapes[name].symbol;
+
+    }
+
+
+    return element;
+
+}
+
+
+/* ==========================================
    LOAD QUESTION
------------------------------ */
+========================================== */
 
 function loadQuestion() {
 
     answered = false;
 
+
+    /*
+     * Reset feedback.
+     */
+
     feedbackElement.textContent = "";
 
-    feedbackElement.className = "feedback";
+    feedbackElement.className =
+        "feedback";
 
-    nextButton.classList.add("hidden");
+
+    /*
+     * Sembunyikan tombol berikutnya.
+     */
+
+    nextButton.classList.add(
+        "hidden"
+    );
+
 
     const question =
         questions[currentQuestion];
 
 
-    /* NUMBER */
+    const currentLevel =
+        levels[
+            question.level - 1
+        ];
+
+
+    /*
+     * Nomor soal.
+     */
 
     questionNumberElement.textContent =
         currentQuestion + 1;
+
 
     totalQuestionsElement.textContent =
         questions.length;
 
 
-    /* SCORE */
+    /*
+     * Skor.
+     */
 
     scoreElement.textContent =
         score;
 
 
-    /* PROGRESS */
+    /*
+     * Level.
+     */
+
+    levelNumber.textContent =
+        question.level;
+
+
+    levelName.textContent =
+        currentLevel.name;
+
+
+    hint.textContent =
+        currentLevel.instruction;
+
+
+    /*
+     * Progress.
+     */
 
     const progress =
-        ((currentQuestion + 1) /
-        questions.length) * 100;
+        (
+            (currentQuestion + 1)
+            /
+            questions.length
+        ) * 100;
+
 
     progressBar.style.width =
-        `${progress}%`;
+        progress + "%";
 
 
-    /* PATTERN */
+    /*
+     * Bersihkan pola.
+     */
 
     patternElement.innerHTML = "";
 
 
-    question.pattern.forEach(shapeName => {
+    /*
+     * Tampilkan pola.
+     */
 
-        const shape =
-            document.createElement("div");
+    question.pattern.forEach(
+        function (shapeName) {
 
-        shape.className =
-            `shape ${shapes[shapeName].className}`;
+            const shape =
+                shapeNode(shapeName);
 
-        shape.textContent =
-            shapes[shapeName].icon;
+            patternElement.appendChild(
+                shape
+            );
 
-        patternElement.appendChild(shape);
+        }
+    );
 
-    });
 
-
-    /* MISSING BOX */
+    /*
+     * Kotak jawaban yang hilang.
+     */
 
     const missing =
         document.createElement("div");
 
+
     missing.className =
         "shape missing";
 
+
     missing.textContent = "?";
 
-    patternElement.appendChild(missing);
+
+    patternElement.appendChild(
+        missing
+    );
 
 
-    /* ANSWERS */
+    /*
+     * Bersihkan pilihan jawaban.
+     */
 
     answersElement.innerHTML = "";
 
 
-    question.options.forEach(option => {
+    /*
+     * Buat pilihan jawaban.
+     */
 
-        const button =
-            document.createElement("button");
+    question.options.forEach(
+        function (option) {
 
-        button.className =
-            "answer-btn";
-
-        button.textContent =
-            shapes[option].icon;
-
-        button.setAttribute(
-            "aria-label",
-            option
-        );
-
-        button.addEventListener(
-            "click",
-            () => checkAnswer(option, button)
-        );
-
-        answersElement.appendChild(button);
-
-    });
+            const button =
+                document.createElement(
+                    "button"
+                );
 
 
-    speak("Perhatikan polanya. Bentuk apa yang berikutnya?");
+            button.className =
+                "answer-btn";
+
+
+            /*
+             * Bentuk.
+             */
+
+            const shape =
+                shapeNode(
+                    option,
+                    true
+                );
+
+
+            button.appendChild(
+                shape
+            );
+
+
+            /*
+             * Nama bentuk.
+             */
+
+            const label =
+                document.createElement(
+                    "span"
+                );
+
+
+            label.textContent =
+                shapes[option].label;
+
+
+            button.appendChild(
+                label
+            );
+
+
+            button.setAttribute(
+                "aria-label",
+                shapes[option].label
+            );
+
+
+            /*
+             * Event klik.
+             */
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    checkAnswer(
+                        option,
+                        button
+                    );
+
+                }
+            );
+
+
+            answersElement.appendChild(
+                button
+            );
+
+        }
+    );
+
+
+    /*
+     * Suara instruksi.
+     */
+
+    speak(
+        "Perhatikan polanya. "
+        +
+        currentLevel.instruction
+        +
+        " Apa jawaban berikutnya?"
+    );
+
 }
 
 
-/* -----------------------------
+/* ==========================================
    CHECK ANSWER
------------------------------ */
+========================================== */
 
 function checkAnswer(
     selected,
     button
 ) {
 
+    /*
+     * Jika sudah menjawab,
+     * jangan izinkan klik lagi.
+     */
+
     if (answered) {
+
         return;
+
     }
+
 
     const question =
         questions[currentQuestion];
 
 
-    if (selected === question.answer) {
+    /*
+     * JAWABAN BENAR
+     */
 
-        /* CORRECT */
+    if (
+        selected ===
+        question.answer
+    ) {
 
         answered = true;
 
+
         score++;
+
 
         scoreElement.textContent =
             score;
 
-        button.classList.add("correct");
+
+        button.classList.add(
+            "correct"
+        );
+
 
         feedbackElement.textContent =
             "🎉 Hebat! Jawabanmu benar!";
 
+
         feedbackElement.className =
             "feedback correct";
 
-        speak("Hebat! Jawabanmu benar!");
+
+        speak(
+            "Hebat! Jawabanmu benar!"
+        );
+
 
         nextButton.classList.remove(
             "hidden"
         );
 
-    } else {
+    }
 
-        /* WRONG */
 
-        button.classList.add("wrong");
+    /*
+     * JAWABAN SALAH
+     */
+
+    else {
+
+        button.classList.add(
+            "wrong"
+        );
+
 
         feedbackElement.textContent =
             "😊 Coba lagi!";
 
+
         feedbackElement.className =
             "feedback wrong";
 
-        speak("Coba lagi!");
 
-        setTimeout(() => {
+        speak(
+            "Coba lagi!"
+        );
 
-            button.classList.remove(
-                "wrong"
-            );
 
-        }, 500);
+        setTimeout(
+            function () {
+
+                button.classList.remove(
+                    "wrong"
+                );
+
+            },
+            500
+        );
 
     }
 
 }
 
 
-/* -----------------------------
+/* ==========================================
    NEXT QUESTION
------------------------------ */
+========================================== */
 
 nextButton.addEventListener(
     "click",
-    () => {
+    function () {
 
         currentQuestion++;
+
 
         if (
             currentQuestion >=
@@ -377,7 +885,9 @@ nextButton.addEventListener(
 
             showResult();
 
-        } else {
+        }
+
+        else {
 
             loadQuestion();
 
@@ -387,31 +897,52 @@ nextButton.addEventListener(
 );
 
 
-/* -----------------------------
+/* ==========================================
    SHOW RESULT
------------------------------ */
+========================================== */
 
 function showResult() {
 
-    document.querySelector(
-        ".question-area"
-    ).classList.add("hidden");
+    /*
+     * Sembunyikan permainan.
+     */
+
+    document
+        .querySelector(
+            ".question-area"
+        )
+        .classList.add(
+            "hidden"
+        );
+
 
     patternElement.classList.add(
         "hidden"
     );
 
-    document.querySelector(
-        ".answer-section"
-    ).classList.add("hidden");
+
+    document
+        .querySelector(
+            ".answer-section"
+        )
+        .classList.add(
+            "hidden"
+        );
+
 
     feedbackElement.classList.add(
         "hidden"
     );
 
+
     nextButton.classList.add(
         "hidden"
     );
+
+
+    /*
+     * Tampilkan hasil.
+     */
 
     resultElement.classList.remove(
         "hidden"
@@ -422,7 +953,9 @@ function showResult() {
         score;
 
 
-    /* BEST SCORE */
+    /*
+     * Ambil skor terbaik.
+     */
 
     const oldBest =
         Number(
@@ -432,6 +965,10 @@ function showResult() {
         );
 
 
+    /*
+     * Rekor baru.
+     */
+
     if (score > oldBest) {
 
         localStorage.setItem(
@@ -439,17 +976,67 @@ function showResult() {
             score
         );
 
+
         bestScoreText.textContent =
             "🏆 Rekor baru! Hebat sekali!";
+
+
+        resultTitle.textContent =
+            "Luar biasa!";
+
+
+        resultMessage.textContent =
+            "Kamu sangat pintar menemukan pola!";
+
 
         speak(
             "Hebat! Kamu mendapatkan rekor baru!"
         );
 
-    } else {
+    }
+
+
+    /*
+     * Skor lama.
+     */
+
+    else {
 
         bestScoreText.textContent =
-            `⭐ Skor terbaikmu: ${oldBest}`;
+            "⭐ Skor terbaikmu: "
+            +
+            oldBest;
+
+
+        /*
+         * Pesan berdasarkan skor.
+         */
+
+        if (score >= 8) {
+
+            resultTitle.textContent =
+                "Hebat sekali!";
+
+        }
+
+        else if (score >= 5) {
+
+            resultTitle.textContent =
+                "Bagus!";
+
+        }
+
+        else {
+
+            resultTitle.textContent =
+                "Terus berlatih!";
+
+        }
+
+
+        resultMessage.textContent =
+            "Semakin sering berlatih, semakin jago!";
+
 
         speak(
             "Permainan selesai. Kamu hebat!"
@@ -460,37 +1047,71 @@ function showResult() {
 }
 
 
-/* -----------------------------
+/* ==========================================
    RESTART
------------------------------ */
+========================================== */
 
 restartButton.addEventListener(
     "click",
-    () => {
+    function () {
+
+        /*
+         * Reset game.
+         */
 
         currentQuestion = 0;
 
         score = 0;
 
-        document.querySelector(
-            ".question-area"
-        ).classList.remove("hidden");
+
+        /*
+         * Buat soal baru.
+         */
+
+        questions =
+            makeQuestions();
+
+
+        /*
+         * Tampilkan kembali game.
+         */
+
+        document
+            .querySelector(
+                ".question-area"
+            )
+            .classList.remove(
+                "hidden"
+            );
+
 
         patternElement.classList.remove(
             "hidden"
         );
 
-        document.querySelector(
-            ".answer-section"
-        ).classList.remove("hidden");
+
+        document
+            .querySelector(
+                ".answer-section"
+            )
+            .classList.remove(
+                "hidden"
+            );
+
 
         feedbackElement.classList.remove(
             "hidden"
         );
 
+
         resultElement.classList.add(
             "hidden"
         );
+
+
+        /*
+         * Mulai dari soal pertama.
+         */
 
         loadQuestion();
 
@@ -498,8 +1119,12 @@ restartButton.addEventListener(
 );
 
 
-/* -----------------------------
+/* ==========================================
    START GAME
------------------------------ */
+========================================== */
+
+questions =
+    makeQuestions();
+
 
 loadQuestion();
