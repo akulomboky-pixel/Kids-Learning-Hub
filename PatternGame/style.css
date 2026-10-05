@@ -1,10 +1,25 @@
+/* ==========================================
+   TEBAK POLA
+   Petualangan Otak Anak
+   Version 2
+========================================== */
+
+
+/* ==========================================
+   GLOBAL
+========================================== */
+
 * {
     box-sizing: border-box;
+
     -webkit-tap-highlight-color: transparent;
 }
 
+
 body {
+
     margin: 0;
+
     min-height: 100vh;
 
     font-family:
@@ -23,16 +38,21 @@ body {
     color: #333;
 
     display: flex;
+
     justify-content: center;
 
     padding: 15px;
 }
 
 
-/* MAIN GAME */
+/* ==========================================
+   MAIN GAME
+========================================== */
 
 .game {
+
     width: 100%;
+
     max-width: 850px;
 
     background: white;
@@ -42,24 +62,35 @@ body {
     padding: 20px;
 
     box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.12);
+        0 10px 30px
+        rgba(0, 0, 0, 0.12);
 }
 
 
-/* HEADER */
+/* ==========================================
+   HEADER
+========================================== */
 
 .top-bar {
+
     display: flex;
+
     align-items: center;
+
     gap: 12px;
 }
 
+
 .home-btn {
+
     width: 55px;
+
     height: 55px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     text-decoration: none;
@@ -71,19 +102,39 @@ body {
     font-size: 28px;
 
     flex-shrink: 0;
+
+    transition:
+        transform 0.15s;
 }
 
+
+.home-btn:active {
+
+    transform: scale(0.9);
+}
+
+
 .title-area {
+
     flex: 1;
 }
 
+
 .title-area h1 {
+
     margin: 0;
 
-    font-size: clamp(22px, 5vw, 34px);
+    font-size:
+        clamp(
+            22px,
+            5vw,
+            34px
+        );
 }
 
+
 .title-area p {
+
     margin: 4px 0 0;
 
     color: #777;
@@ -91,10 +142,14 @@ body {
     font-size: 14px;
 }
 
+
 .score-box {
+
     background: #FFF3B0;
 
-    padding: 10px 15px;
+    padding:
+        10px
+        15px;
 
     border-radius: 20px;
 
@@ -106,13 +161,59 @@ body {
 }
 
 
-/* PROGRESS */
+/* ==========================================
+   LEVEL
+========================================== */
 
-.progress-area {
-    margin-top: 20px;
+.level-row {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    margin:
+        18px 0 4px;
 }
 
+
+.level-badge {
+
+    background: #E8F7FF;
+
+    border-radius: 18px;
+
+    padding:
+        7px
+        13px;
+
+    font-weight: bold;
+}
+
+
+.level-name {
+
+    color: #666;
+
+    font-size: 14px;
+}
+
+
+/* ==========================================
+   PROGRESS
+========================================== */
+
+.progress-area {
+
+    margin-top: 12px;
+}
+
+
 .progress-text {
+
     text-align: center;
 
     font-weight: bold;
@@ -120,8 +221,11 @@ body {
     margin-bottom: 8px;
 }
 
+
 .progress-track {
+
     width: 100%;
+
     height: 12px;
 
     background: #eee;
@@ -131,45 +235,65 @@ body {
     overflow: hidden;
 }
 
+
 #progressBar {
+
     width: 10%;
+
     height: 100%;
 
     background: #7ED957;
 
     border-radius: 20px;
 
-    transition: width 0.3s ease;
+    transition:
+        width 0.3s ease;
 }
 
 
-/* QUESTION */
+/* ==========================================
+   QUESTION
+========================================== */
 
 .question-area {
+
     text-align: center;
 
     margin-top: 25px;
 }
 
+
 .question-area h2 {
+
     margin-bottom: 6px;
 
-    font-size: clamp(22px, 5vw, 32px);
+    font-size:
+        clamp(
+            22px,
+            5vw,
+            32px
+        );
 }
 
+
 .question-area p {
+
     margin-top: 0;
 
     color: #777;
 }
 
 
-/* PATTERN */
+/* ==========================================
+   PATTERN AREA
+========================================== */
 
 .pattern {
+
     min-height: 150px;
 
-    margin: 25px auto;
+    margin:
+        25px auto;
 
     padding: 20px;
 
@@ -179,7 +303,12 @@ body {
 
     justify-content: center;
 
-    gap: clamp(8px, 2vw, 20px);
+    gap:
+        clamp(
+            8px,
+            2vw,
+            20px
+        );
 
     flex-wrap: wrap;
 
@@ -187,78 +316,183 @@ body {
 
     border-radius: 25px;
 
-    border: 3px dashed #DDD;
+    border:
+        3px dashed #DDD;
 }
 
 
-/* SHAPES */
+/* ==========================================
+   SHAPES
+========================================== */
 
 .shape {
-    width: clamp(45px, 12vw, 75px);
-    height: clamp(45px, 12vw, 75px);
+
+    width:
+        clamp(
+            45px,
+            12vw,
+            72px
+        );
+
+    height:
+        clamp(
+            45px,
+            12vw,
+            72px
+        );
 
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
-    font-size: clamp(25px, 7vw, 45px);
-
-    transition: transform 0.2s;
+    transition:
+        transform 0.2s;
 }
 
-.circle {
+
+/* CIRCLE */
+
+.shape.circle {
+
     border-radius: 50%;
+
+    background: #FF6B6B;
 }
 
-.square {
+
+/* SQUARE */
+
+.shape.square {
+
     border-radius: 10px;
+
+    background: #5B8DEF;
 }
 
-.triangle {
+
+/* TRIANGLE */
+
+.shape.triangle {
+
     width: 0;
+
     height: 0;
 
-    border-left: 30px solid transparent;
-    border-right: 30px solid transparent;
-    border-bottom: 60px solid #FFB347;
+    border-left:
+        clamp(
+            23px,
+            6vw,
+            36px
+        )
+        solid transparent;
 
-    background: transparent !important;
+    border-right:
+        clamp(
+            23px,
+            6vw,
+            36px
+        )
+        solid transparent;
+
+    border-bottom:
+        clamp(
+            46px,
+            12vw,
+            72px
+        )
+        solid #FFB347;
+
+    background: transparent;
 }
 
-.star {
-    font-size: clamp(45px, 10vw, 70px);
+
+/* STAR */
+
+.shape.star {
+
+    width: auto;
+
+    background: transparent;
+
+    font-size:
+        clamp(
+            43px,
+            10vw,
+            65px
+        );
 }
 
 
-/* MISSING */
+/* DIAMOND */
+
+.shape.diamond {
+
+    background: #9B7EDE;
+
+    transform:
+        rotate(45deg);
+
+    border-radius: 7px;
+}
+
+
+/* ==========================================
+   MISSING ANSWER
+========================================== */
 
 .missing {
-    border: 4px dashed #999;
 
-    background: white;
+    border:
+        4px dashed #999 !important;
 
-    border-radius: 15px;
+    background:
+        white !important;
+
+    border-radius:
+        15px !important;
 
     color: #999;
 
     font-size: 30px;
+
+    width:
+        clamp(
+            45px,
+            12vw,
+            72px
+        ) !important;
+
+    height:
+        clamp(
+            45px,
+            12vw,
+            72px
+        ) !important;
 }
 
 
-/* ANSWERS */
+/* ==========================================
+   ANSWERS
+========================================== */
 
 .answer-section {
+
     text-align: center;
 
     margin-top: 25px;
 }
 
+
 .answer-section h3 {
+
     margin-bottom: 15px;
 }
 
+
 .answers {
+
     display: grid;
 
     grid-template-columns:
@@ -267,10 +501,13 @@ body {
     gap: 15px;
 }
 
+
 .answer-btn {
+
     min-height: 100px;
 
-    border: 4px solid transparent;
+    border:
+        4px solid transparent;
 
     border-radius: 20px;
 
@@ -278,49 +515,146 @@ body {
 
     cursor: pointer;
 
-    font-size: 50px;
+    font-size: 18px;
+
+    font-family: inherit;
+
+    font-weight: bold;
 
     display: flex;
 
     align-items: center;
+
     justify-content: center;
+
+    gap: 8px;
 
     transition:
         transform 0.15s,
         box-shadow 0.15s;
 }
 
+
 .answer-btn:hover {
-    transform: translateY(-3px);
+
+    transform:
+        translateY(-3px);
 
     box-shadow:
-        0 6px 15px rgba(0,0,0,0.12);
+        0 6px 15px
+        rgba(0, 0, 0, 0.12);
 }
+
 
 .answer-btn:active {
-    transform: scale(0.94);
+
+    transform:
+        scale(0.94);
 }
+
+
+/* ANSWER SHAPE */
+
+.answer-shape {
+
+    width: 42px;
+
+    height: 42px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+.answer-shape.circle {
+
+    border-radius: 50%;
+
+    background: #FF6B6B;
+}
+
+
+.answer-shape.square {
+
+    border-radius: 7px;
+
+    background: #5B8DEF;
+}
+
+
+.answer-shape.triangle {
+
+    width: 0;
+
+    height: 0;
+
+    border-left: 20px solid transparent;
+
+    border-right: 20px solid transparent;
+
+    border-bottom: 40px solid #FFB347;
+}
+
+
+.answer-shape.star {
+
+    font-size: 42px;
+}
+
+
+.answer-shape.diamond {
+
+    width: 32px;
+
+    height: 32px;
+
+    background: #9B7EDE;
+
+    transform: rotate(45deg);
+
+    border-radius: 5px;
+}
+
+
+/* CORRECT */
 
 .answer-btn.correct {
-    border-color: #57C84D;
 
-    background: #E5FFE3;
+    border-color:
+        #57C84D;
 
-    animation: correctPop 0.4s ease;
+    background:
+        #E5FFE3;
+
+    animation:
+        correctPop 0.4s ease;
 }
+
+
+/* WRONG */
 
 .answer-btn.wrong {
-    border-color: #FF6B6B;
 
-    background: #FFE5E5;
+    border-color:
+        #FF6B6B;
 
-    animation: shake 0.35s ease;
+    background:
+        #FFE5E5;
+
+    animation:
+        shake 0.35s ease;
 }
 
 
-/* FEEDBACK */
+/* ==========================================
+   FEEDBACK
+========================================== */
 
 .feedback {
+
     min-height: 45px;
 
     margin-top: 20px;
@@ -332,34 +666,45 @@ body {
     font-weight: bold;
 }
 
+
 .feedback.correct {
+
     color: #38A169;
 }
 
+
 .feedback.wrong {
+
     color: #E53E3E;
 }
 
 
-/* BUTTON */
+/* ==========================================
+   BUTTONS
+========================================== */
 
 .next-btn,
 .restart-btn {
+
     display: block;
 
-    margin: 15px auto;
+    margin:
+        15px auto;
 
     border: none;
 
     border-radius: 20px;
 
-    padding: 15px 25px;
+    padding:
+        15px 25px;
 
     background: #5B8DEF;
 
     color: white;
 
     font-size: 18px;
+
+    font-family: inherit;
 
     font-weight: bold;
 
@@ -369,40 +714,56 @@ body {
         0 5px 0 #416FC4;
 }
 
+
 .next-btn:active,
 .restart-btn:active {
-    transform: translateY(4px);
+
+    transform:
+        translateY(4px);
 
     box-shadow: none;
 }
 
 
-/* RESULT */
+/* ==========================================
+   RESULT
+========================================== */
 
 .result {
+
     text-align: center;
 
-    padding: 30px 10px;
+    padding:
+        30px 10px;
 }
+
 
 .result-emoji {
+
     font-size: 80px;
 
-    animation: bounce 1s infinite alternate;
+    animation:
+        bounce 1s infinite alternate;
 }
+
 
 .result h2 {
+
     font-size: 40px;
 
-    margin: 10px 0;
+    margin:
+        10px 0;
 }
 
+
 .final-score {
+
     display: inline-block;
 
     background: #FFF3B0;
 
-    padding: 15px 30px;
+    padding:
+        15px 30px;
 
     border-radius: 20px;
 
@@ -413,7 +774,9 @@ body {
     margin: 15px;
 }
 
+
 .home-result {
+
     display: block;
 
     margin-top: 25px;
@@ -426,14 +789,19 @@ body {
 }
 
 
-/* UTILITIES */
+/* ==========================================
+   UTILITIES
+========================================== */
 
 .hidden {
+
     display: none !important;
 }
 
 
-/* ANIMATIONS */
+/* ==========================================
+   ANIMATIONS
+========================================== */
 
 @keyframes correctPop {
 
@@ -450,57 +818,76 @@ body {
     }
 }
 
+
 @keyframes shake {
 
-    0%, 100% {
-        transform: translateX(0);
+    0%,
+    100% {
+        transform:
+            translateX(0);
     }
 
     25% {
-        transform: translateX(-8px);
+        transform:
+            translateX(-8px);
     }
 
     75% {
-        transform: translateX(8px);
+        transform:
+            translateX(8px);
     }
 }
+
 
 @keyframes bounce {
 
     from {
-        transform: translateY(0);
+        transform:
+            translateY(0);
     }
 
     to {
-        transform: translateY(-12px);
+        transform:
+            translateY(-12px);
     }
 }
 
 
-/* MOBILE */
+/* ==========================================
+   MOBILE
+========================================== */
 
 @media (max-width: 500px) {
 
     .game {
+
         padding: 15px;
 
         border-radius: 20px;
     }
 
+
     .home-btn {
+
         width: 45px;
+
         height: 45px;
 
         font-size: 23px;
     }
 
+
     .score-box {
-        padding: 8px 11px;
+
+        padding:
+            8px 11px;
 
         font-size: 17px;
     }
 
+
     .pattern {
+
         min-height: 130px;
 
         gap: 7px;
@@ -508,9 +895,26 @@ body {
         padding: 12px;
     }
 
+
     .answer-btn {
+
         min-height: 85px;
 
-        font-size: 38px;
+        font-size: 15px;
     }
+
+
+    .answer-shape {
+
+        width: 35px;
+
+        height: 35px;
+    }
+
+
+    .level-row {
+
+        margin-top: 12px;
+    }
+
 }
