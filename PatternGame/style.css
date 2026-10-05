@@ -1,0 +1,516 @@
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family:
+        "Comic Sans MS",
+        "Trebuchet MS",
+        Arial,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            180deg,
+            #FFF4D6,
+            #E8F7FF
+        );
+
+    color: #333;
+
+    display: flex;
+    justify-content: center;
+
+    padding: 15px;
+}
+
+
+/* MAIN GAME */
+
+.game {
+    width: 100%;
+    max-width: 850px;
+
+    background: white;
+
+    border-radius: 28px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+
+/* HEADER */
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.home-btn {
+    width: 55px;
+    height: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+
+    background: #FFF0B3;
+
+    border-radius: 50%;
+
+    font-size: 28px;
+
+    flex-shrink: 0;
+}
+
+.title-area {
+    flex: 1;
+}
+
+.title-area h1 {
+    margin: 0;
+
+    font-size: clamp(22px, 5vw, 34px);
+}
+
+.title-area p {
+    margin: 4px 0 0;
+
+    color: #777;
+
+    font-size: 14px;
+}
+
+.score-box {
+    background: #FFF3B0;
+
+    padding: 10px 15px;
+
+    border-radius: 20px;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+
+/* PROGRESS */
+
+.progress-area {
+    margin-top: 20px;
+}
+
+.progress-text {
+    text-align: center;
+
+    font-weight: bold;
+
+    margin-bottom: 8px;
+}
+
+.progress-track {
+    width: 100%;
+    height: 12px;
+
+    background: #eee;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+#progressBar {
+    width: 10%;
+    height: 100%;
+
+    background: #7ED957;
+
+    border-radius: 20px;
+
+    transition: width 0.3s ease;
+}
+
+
+/* QUESTION */
+
+.question-area {
+    text-align: center;
+
+    margin-top: 25px;
+}
+
+.question-area h2 {
+    margin-bottom: 6px;
+
+    font-size: clamp(22px, 5vw, 32px);
+}
+
+.question-area p {
+    margin-top: 0;
+
+    color: #777;
+}
+
+
+/* PATTERN */
+
+.pattern {
+    min-height: 150px;
+
+    margin: 25px auto;
+
+    padding: 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: clamp(8px, 2vw, 20px);
+
+    flex-wrap: wrap;
+
+    background: #FAFAFA;
+
+    border-radius: 25px;
+
+    border: 3px dashed #DDD;
+}
+
+
+/* SHAPES */
+
+.shape {
+    width: clamp(45px, 12vw, 75px);
+    height: clamp(45px, 12vw, 75px);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: clamp(25px, 7vw, 45px);
+
+    transition: transform 0.2s;
+}
+
+.circle {
+    border-radius: 50%;
+}
+
+.square {
+    border-radius: 10px;
+}
+
+.triangle {
+    width: 0;
+    height: 0;
+
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-bottom: 60px solid #FFB347;
+
+    background: transparent !important;
+}
+
+.star {
+    font-size: clamp(45px, 10vw, 70px);
+}
+
+
+/* MISSING */
+
+.missing {
+    border: 4px dashed #999;
+
+    background: white;
+
+    border-radius: 15px;
+
+    color: #999;
+
+    font-size: 30px;
+}
+
+
+/* ANSWERS */
+
+.answer-section {
+    text-align: center;
+
+    margin-top: 25px;
+}
+
+.answer-section h3 {
+    margin-bottom: 15px;
+}
+
+.answers {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+}
+
+.answer-btn {
+    min-height: 100px;
+
+    border: 4px solid transparent;
+
+    border-radius: 20px;
+
+    background: #F7F7F7;
+
+    cursor: pointer;
+
+    font-size: 50px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    transition:
+        transform 0.15s,
+        box-shadow 0.15s;
+}
+
+.answer-btn:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 6px 15px rgba(0,0,0,0.12);
+}
+
+.answer-btn:active {
+    transform: scale(0.94);
+}
+
+.answer-btn.correct {
+    border-color: #57C84D;
+
+    background: #E5FFE3;
+
+    animation: correctPop 0.4s ease;
+}
+
+.answer-btn.wrong {
+    border-color: #FF6B6B;
+
+    background: #FFE5E5;
+
+    animation: shake 0.35s ease;
+}
+
+
+/* FEEDBACK */
+
+.feedback {
+    min-height: 45px;
+
+    margin-top: 20px;
+
+    text-align: center;
+
+    font-size: 24px;
+
+    font-weight: bold;
+}
+
+.feedback.correct {
+    color: #38A169;
+}
+
+.feedback.wrong {
+    color: #E53E3E;
+}
+
+
+/* BUTTON */
+
+.next-btn,
+.restart-btn {
+    display: block;
+
+    margin: 15px auto;
+
+    border: none;
+
+    border-radius: 20px;
+
+    padding: 15px 25px;
+
+    background: #5B8DEF;
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 5px 0 #416FC4;
+}
+
+.next-btn:active,
+.restart-btn:active {
+    transform: translateY(4px);
+
+    box-shadow: none;
+}
+
+
+/* RESULT */
+
+.result {
+    text-align: center;
+
+    padding: 30px 10px;
+}
+
+.result-emoji {
+    font-size: 80px;
+
+    animation: bounce 1s infinite alternate;
+}
+
+.result h2 {
+    font-size: 40px;
+
+    margin: 10px 0;
+}
+
+.final-score {
+    display: inline-block;
+
+    background: #FFF3B0;
+
+    padding: 15px 30px;
+
+    border-radius: 20px;
+
+    font-size: 28px;
+
+    font-weight: bold;
+
+    margin: 15px;
+}
+
+.home-result {
+    display: block;
+
+    margin-top: 25px;
+
+    color: #555;
+
+    text-decoration: none;
+
+    font-weight: bold;
+}
+
+
+/* UTILITIES */
+
+.hidden {
+    display: none !important;
+}
+
+
+/* ANIMATIONS */
+
+@keyframes correctPop {
+
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes shake {
+
+    0%, 100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-8px);
+    }
+
+    75% {
+        transform: translateX(8px);
+    }
+}
+
+@keyframes bounce {
+
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-12px);
+    }
+}
+
+
+/* MOBILE */
+
+@media (max-width: 500px) {
+
+    .game {
+        padding: 15px;
+
+        border-radius: 20px;
+    }
+
+    .home-btn {
+        width: 45px;
+        height: 45px;
+
+        font-size: 23px;
+    }
+
+    .score-box {
+        padding: 8px 11px;
+
+        font-size: 17px;
+    }
+
+    .pattern {
+        min-height: 130px;
+
+        gap: 7px;
+
+        padding: 12px;
+    }
+
+    .answer-btn {
+        min-height: 85px;
+
+        font-size: 38px;
+    }
+}
